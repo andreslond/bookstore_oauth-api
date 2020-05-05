@@ -1,6 +1,7 @@
 package app
 
 import (
+	"github.com/andrestor2/bookstore_oauth-api/src/clients/cassandra"
 	"github.com/andrestor2/bookstore_oauth-api/src/domain/access_token"
 	"github.com/andrestor2/bookstore_oauth-api/src/http"
 	"github.com/andrestor2/bookstore_oauth-api/src/repository/db"
@@ -12,6 +13,12 @@ var (
 )
 
 func StartApplication() {
+	session, dbErr := cassandra.GetSessions()
+	if dbErr != nil {
+		panic(dbErr)
+	}
+	session.Close()
+
 	atHandler := http.NewHandler(access_token.NewService(db.NewRepository()))
 
 	router.GET("/oauth/access_token/:access_token_id", atHandler.GetById)
