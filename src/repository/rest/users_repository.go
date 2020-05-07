@@ -10,7 +10,7 @@ import (
 
 var (
 	usersRestClient = rest.RequestBuilder{
-		BaseURL: "http://api.bookstore.com:8082",
+		BaseURL: "http://localhost:8081",
 		Timeout: 100 * time.Millisecond,
 	}
 )
