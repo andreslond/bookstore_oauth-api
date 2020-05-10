@@ -17,7 +17,7 @@ var (
 )
 
 type RestUsersRepository interface {
-	LoginUser(string, string) (*users.User, *rest_errors.RestErr)
+	LoginUser(string, string) (*users.User, rest_errors.RestErr)
 }
 
 type usersRepository struct{}
@@ -26,7 +26,7 @@ func NewRestUsersRepository() RestUsersRepository {
 	return &usersRepository{}
 }
 
-func (r *usersRepository) LoginUser(email string, password string) (*users.User, *rest_errors.RestErr) {
+func (r *usersRepository) LoginUser(email string, password string) (*users.User, rest_errors.RestErr) {
 	request := users.UserLoginRequest{
 		Email:    email,
 		Password: password,
@@ -44,7 +44,7 @@ func (r *usersRepository) LoginUser(email string, password string) (*users.User,
 		if err != nil {
 			return nil, rest_errors.NewInternalServerError("invalid error interface when trying to login user", errors.New("database error"))
 		}
-		return nil, &restErr
+		return nil, restErr
 	}
 
 	var user users.User
